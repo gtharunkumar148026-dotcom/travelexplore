@@ -40,12 +40,14 @@ mongoose.connect(MONGODB_URI, {
 
 // ✅ CORS Configuration
 app.use(cors({
-  origin: true,
+  origin: [
+    "http://localhost:3000",
+    "https://travelexplore.onrender.com"
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 // ✅ Handle preflight requests
 app.options('*', cors());
 
