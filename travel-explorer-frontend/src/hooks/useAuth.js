@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const API_URL = "https://travelexplore.onrender.com";
+
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,10 +12,10 @@ export const useAuth = () => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/user-status', {
+      const response = await fetch(`${API_URL}/api/user-status`, {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
@@ -30,7 +32,7 @@ export const useAuth = () => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +42,7 @@ export const useAuth = () => {
       });
 
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         setUser(data.user);
         return { success: true, user: data.user };
@@ -54,7 +56,7 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/logout', {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });
