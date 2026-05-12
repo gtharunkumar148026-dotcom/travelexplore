@@ -40,7 +40,7 @@ mongoose.connect(MONGODB_URI, {
 
 // ✅ CORS Configuration
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -119,8 +119,13 @@ app.get('/api/user-status', (req, res) => {
 });
 
 // ✅ Serve React App (for production)
+// ✅ Serve React Frontend
+app.use(express.static(path.join(__dirname, '../travel-explorer-frontend/build')));
+
 app.get('*', (req, res) => {
- // res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(
+    path.join(__dirname, '../travel-explorer-frontend/build/index.html')
+  );
 });
 
 // ✅ Error Handling Middleware

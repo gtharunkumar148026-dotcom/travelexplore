@@ -4,9 +4,10 @@
   "description": "Travel Info Explorer",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node app.js",
     "server": "nodemon app.js",
-    "client": "npm start --prefix ../travel-explorer-frontend"
+    "client": "npm start --prefix ../travel-explorer-frontend",
+    "build": "cd ../travel-explorer-frontend && npm install && npm run build"
   },
   "author": "YourName",
   "license": "ISC",
