@@ -1,0 +1,201 @@
+body {
+      background-image: url('https://cdn.pixabay.com/photo/2021/08/22/15/48/nature-6565499_1280.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-color: #36a4c5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+.travel-explorer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url('https://cdn.pixabay.com/photo/2021/08/22/15/48/nature-6565499_1280.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.main-content {
+    flex: 1;
+}
+
+.section-title {
+    color: #d63384;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.destination-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-direction {
+    margin-top: 10px;
+    background-color: #198754;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-direction:hover {
+    background-color: #146c43;
+    color: white;
+}
+
+.travel-options {
+    background-color: #f0f8ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    animation: fadeIn 0.8s ease-in;
+}
+
+.travel-options ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.travel-options li::before {
+    content: "🚗 ";
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ensure proper spacing for all sections */
+#searchResults,
+#bookingSection,
+#feedbackSection {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Map container styling */
+.ratio-16x9 {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Tourist spots styling */
+#touristSpots h6 {
+    color: #e3df0c;
+    margin-bottom: 0.5rem;
+}
+
+/* Card title colors */
+.card-title {
+    color: #0d6efd;
+}
+
+/* Info section styling */
+#info h3 {
+    color: #d63384;
+}
+
+#info h5 {
+    color: #198754;
+}
+.destination-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.destination-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.destination-card .card-text {
+  flex-grow: 1;
+}
+/* Add to TravelInfoExplorer.css */
+
+/* Destination cards */
+.destination-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.destination-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.destination-card .card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.destination-card .card-text {
+  flex-grow: 1;
+  margin-bottom: 15px;
+}
+
+/* Search results favorite button */
+.search-result-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.card-body .favorite-btn {
+  margin: 0;
+}
+
+/* Tourist spots favorite button */
+.tourist-spot-item {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  gap: 15px;
+}
+
+.tourist-spot-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Booking cards */
+.booking-card .card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.booking-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Ensure favorite button is visible */
+.favorite-btn {
+  z-index: 10;
+  position: relative;
+}

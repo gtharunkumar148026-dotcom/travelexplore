@@ -1,0 +1,29 @@
+{
+  "name": "gt",
+  "version": "1.0.0",
+  "description": "Travel Info Explorer",
+  "main": "app.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon app.js",
+    "client": "npm start --prefix ../travel-explorer-frontend"
+  },
+  "author": "YourName",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.8.7"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "kill-port": "^2.0.1",
+    "nodemon": "^3.1.10"
+  },
+  "keywords": []
+}

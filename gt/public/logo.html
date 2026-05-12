@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> home-Travel explore</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <style>
+            h1 {
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+
+            body,
+            html {
+                height: 100%
+            }
+
+            .bgimg {
+                background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+                min-height: 100%;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .btn{
+                 border-radius: 8px;
+                 background-color: brown;
+                 font-size: medium;
+                 color: aliceblue;
+                 width: 200px;
+                 height: 65px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+    <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+        <div class="w3-display-topleft w3-padding-large w3-xlarge" style="color: blue;">
+            Welcome 
+        </div>
+        <div class="w3-display-topright w3-padding-large">
+            <a href="sign.html"><button class="btn">signup/register</button></a>
+        </div>
+        <div class="w3-display-middle">
+            <h1 class="w3-jumbo w3-animate-top">Travel explore</h1>
+            <hr class="w3-border-grey" style="margin:auto;width:40%">
+            <p class="w3-large w3-center">Find the places</p>
+        </div>
+        <div class="w3-display-bottomleft w3-padding-large">
+            Made  By <a href="https://www.w3schools.com/spaces" target="_blank">Travel explore team</a>
+        </div>
+    </div>
+    <script>
+    function redirectNow() {
+      // Check if user is already logged in (optional)
+      window.location.href = "/login.html";
+    }
+
+    // Auto-redirect after 5 seconds
+    setTimeout(redirectNow, 5000);
+  </script>
+</body>
+
+</html>

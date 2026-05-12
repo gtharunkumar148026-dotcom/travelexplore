@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Info Explorer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --fade-time: 0.8s;
+    }
+    .nav-link.active {
+      background-color: #0d6efd !important;
+      color: white !important;
+      border-radius: 5px;
+    }
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2021/08/22/15/48/nature-6565499_1280.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .fade-in {
+      animation: fadeIn var(--fade-time) ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .navbar {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .hero {
+      background: url('https://source.unsplash.com/1600x600/?travel,explore') center/cover no-repeat;
+      height: 60vh;
+      color: rgb(250, 17, 17);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      color: #f7e707;
+    }
+    .hero p {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #67f10b;
+    }
+    .destination-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .destination-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    footer {
+      background: #f8f9fa;
+      padding: 1rem 0;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .spot-image {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .navbar .nav-link,
+    .navbar-brand {
+      color: white !important;
+    }
+    .card-title {
+      color: #0d6efd;
+    }
+    #info h3 {
+      color: #d63384;
+    }
+    #info h5 {
+      color: #198754;
+    }
+    #touristSpots h6 {
+      color: #e3df0c;
+    }
+    .btn-direction {
+      margin-top: 10px;
+      background-color: #198754;
+      color: white;
+    }
+    .travel-options {
+      background-color: #f0f8ff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      animation: fadeIn var(--fade-time) ease-in;
+    }
+    .travel-options ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .travel-options li::before {
+      content: "\1F698 ";
+    }
+    h3{
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-weight: bold;
+      color: #000000;
+    }
+    #bookingSection {
+      display: none;
+    }
+    #bookingSection.show {
+      display: block;
+      animation: fadeIn var(--fade-time) ease-in;
+    }
+    .user-status {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-black">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#" onclick="resetSearch()">TravelInfo</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" onclick="refreshPage(); setActiveNav(this);">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#destinations" onclick="setActiveNav(this);">Destinations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact" onclick="setActiveNav(this); showFeedbackForm();">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#history" onclick="setActiveNav(this); showHistory();">History</a>
+          </li>
+        </ul>
+        <form class="d-flex me-3" role="search" onsubmit="event.preventDefault(); searchPlaceFromNavbar();">
+          <input class="form-control me-2" type="search" id="placeInput" placeholder="Search a place..." aria-label="Search" />
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+        
+        <!-- Dynamic Login/Logout Buttons -->
+        <div id="authButtons">
+          <a href="login.html" class="btn btn-outline-light me-2" id="loginBtn">Login</a>
+          <button class="btn btn-danger me-2" id="logoutBtn" style="display: none;">Logout</button>
+          <button id="adminBtn" class="btn btn-warning" style="display: none;">Admin Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- User Status Display -->
+  <div class="container mt-2">
+    <div class="user-status" id="userStatus">
+      Loading user status...
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>Explore the World</h1>
+    <p class="lead">Discover beautiful destinations across the globe</p>
+  </section>
+
+  <main class="container my-5" id="destinations">
+    <h2 class="mb-4" style="color: #d63384;">Top Destinations</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="destinationGrid"></div>
+  </main>
+
+  <section class="container my-5 d-none" id="searchResults">
+    <div class="card mb-4">
+      <div class="card-body" id="info">Search for a destination to see details here.</div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Popular Tourist Spots</h5>
+        <div id="touristSpots"></div>
+      </div>
+    </div>
+    <div class="container mt-4 travel-options">
+      <h5>🚗 Travel Options to Reach This Place:</h5>
+      <ul id="travelOptionsList">
+        <li>Nearest Airport: <a href="https://www.google.com/maps/search/airport+near+PLACE" target="_blank">View on Google Maps</a></li>
+        <li>Nearest Railway Station: <a href="https://www.google.com/maps/search/railway+station+near+PLACE" target="_blank">View on Google Maps</a></li>
+        <li>Local Transport: Auto, Taxi, Bus services available</li>
+        <li>Online Rides: <a href="https://www.uber.com/global/en/cities/" target="_blank">Uber</a>, <a href="https://www.olacabs.com/" target="_blank">Ola</a></li>
+        <li>Estimated Travel Time: <a href="https://www.google.com/maps/dir/?api=1&destination=PLACE" target="_blank">Check Directions</a></li>
+      </ul>
+    </div>
+    <div id="map" class="mb-4"></div>
+    <div class="row" id="images"></div>
+    <div class="mt-4">
+      <button class="btn btn-secondary" onclick="resetSearch()">Back to All Destinations</button>
+    </div>
+  </section>
+
+  <section class="container my-5 d-none" id="bookingSection">
+    <h3 class="mb-4">Book a Room or Restaurant Nearby</h3>
+    <div class="row" id="bookingCards"></div>
+  </section>
+
+  <section class="container my-5 d-none" id="feedbackSection">
+    <h2 class="mb-4" style="color: #0d6efd;">Feedback Form</h2>
+    <form id="feedbackForm" class="p-4 border rounded shadow-sm bg-light">
+      <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="name" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Your Email</label>
+        <input type="email" class="form-control" id="email" required />
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Your Feedback</label>
+        <textarea class="form-control" id="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Feedback</button>
+    </form>
+  </section>
+
+  <section class="container my-5 d-none" id="historySection">
+    <h2 class="mb-4" style="color: #0d6efd;">Search History</h2>
+    <div id="historyList" class="row"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 TravelInfo Explorer. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // User authentication and status management
+    async function loadUserStatus() {
+      try {
+        const response = await fetch('/api/user-status', {
+          credentials: 'include'
+        });
+        
+        if (!response.ok) {
+          throw new Error('Not logged in');
+        }
+        
+        const data = await response.json();
+        
+        if (data.loggedIn) {
+          // User is logged in
+          document.getElementById('userStatus').innerHTML = `
+            <strong>Welcome, ${data.email}!</strong>
+            ${data.isAdmin ? ' (Admin)' : ''}
+          `;
+          
+          document.getElementById('loginBtn').style.display = 'none';
+          document.getElementById('logoutBtn').style.display = 'inline-block';
+          
+          if (data.isAdmin) {
+            document.getElementById('adminBtn').style.display = 'inline-block';
+            document.getElementById('adminBtn').onclick = () => {
+              window.location.href = 'admin.html';
+            };
+          }
+        } else {
+          // User is not logged in
+          showLoginState();
+        }
+      } catch (error) {
+        console.log('User not logged in:', error.message);
+        showLoginState();
+      }
+    }
+
+    function showLoginState() {
+      document.getElementById('userStatus').innerHTML = `
+        <strong>Please <a href="login.html">login</a> to access all features</strong>
+      `;
+      document.getElementById('loginBtn').style.display = 'inline-block';
+      document.getElementById('logoutBtn').style.display = 'none';
+      document.getElementById('adminBtn').style.display = 'none';
+    }
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        const response = await fetch('/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          window.location.href = 'login.html';
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Navigation functions
+    function setActiveNav(link) {
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+
+    function refreshPage() {
+      location.reload();
+    }
+
+    function resetSearch() {
+      document.getElementById('searchResults').classList.add('d-none');
+      document.getElementById('bookingSection').classList.add('d-none');
+      document.getElementById('feedbackSection').classList.add('d-none');
+      document.getElementById('historySection').classList.add('d-none');
+      document.getElementById('destinations').classList.remove('d-none');
+      document.getElementById('placeInput').value = '';
+      renderDestinations(destinations);
+    }
+
+    // Destination data and rendering
+    const destinations = [
+      { name: 'Kerala', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFFWWAqgALTSQhRrHjUuNjsbsISPFzBQ7DIA&s' },
+      { name: 'Paris', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5yY4wjJaC_3aA8tMBfLqvdTnbYsQeTcCZFw&s' },
+      { name: 'Bali', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUCYG5QeI6o57NH06gy_Iw_A2w0Hg6SVoLsw&s' },
+      { name: 'Ladakh', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHUvbtc0FSt473-dWTVd5ntJ7KKy5iLhzZMg&s' },
+      { name: 'Kyoto', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1Sb1hRIB1uSc0HX0i4YUCp29AtiEiYUAFAQ&s' },
+      { name: 'Cape Town', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxSMrLGC6yPN6Z4ymKiYBql-lrY8Xoe4F1kg&s' },
+      { name: 'New York', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUy6J0ko7jYXVIHPvrCu8cgpTPnBULTW6JIg&s' },
+      { name: 'Dubai', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvFFEZMz-sQ6c5qe74w3mNZdS3RXQIixkexA&s' },
+      { name: 'Venice', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWCD1aWBmwZAzettpjMGofX2vzaSCAw1KElA&s' }
+    ];
+
+    function renderDestinations(list) {
+      const container = document.getElementById('destinationGrid');
+      container.innerHTML = '';
+      list.forEach(dest => {
+        container.innerHTML += `
+          <div class="col">
+            <div class="card destination-card h-100 shadow-sm">
+              <img src="${dest.image}" class="card-img-top" alt="${dest.name}">
+              <div class="card-body">
+                <h5 class="card-title">${dest.name}</h5>
+                <p class="card-text">Click below to explore more about ${dest.name}.</p>
+                <button class="btn btn-outline-primary w-100" onclick="searchPlace('${dest.name}')">Explore</button>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    function searchPlaceFromNavbar() {
+      const place = document.getElementById('placeInput').value.trim();
+      if (place) {
+        searchPlace(place);
+      }
+    }
+
+    function searchPlace(place) {
+      document.getElementById('destinations').classList.add('d-none');
+      document.getElementById('searchResults').classList.remove('d-none');
+      document.getElementById('bookingSection').classList.remove('d-none');
+
+      const infoEl = document.getElementById('info');
+      const mapEl = document.getElementById('map');
+      const touristEl = document.getElementById('touristSpots');
+
+      infoEl.innerHTML = '<p>Loading information...</p>';
+      mapEl.innerHTML = '';
+      touristEl.innerHTML = '';
+
+      fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(place)}`)
+        .then(res => res.json())
+        .then(data => {
+          infoEl.innerHTML = `
+            <h3>${data.title}</h3>
+            <p>${data.extract}</p>
+            <h5>What makes ${data.title} special?</h5>
+            <p>This place is known for its unique culture, attractions, and beautiful scenery.</p>
+            <h5>How to Reach:</h5>
+            <p>You can reach ${data.title} by air, train, or road depending on your location.</p>
+            <a class="btn btn-direction" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place)}" target="_blank">Get Directions</a>`;
+        })
+        .catch(() => {
+          infoEl.innerHTML = '<p class="text-danger">Could not fetch information from Wikipedia.</p>';
+        });
+
+      mapEl.innerHTML = `
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.google.com/maps?q=${encodeURIComponent(place)}&output=embed" allowfullscreen loading="lazy"></iframe>
+        </div>`;
+
+      const spotTemplates = ['Fort', 'Beach', 'Temple', 'Park', 'Museum'];
+      spotTemplates.forEach(type => {
+        const name = `${place} ${type}`;
+        const spotDiv = document.createElement('div');
+        spotDiv.className = 'mb-3';
+        const googleSearchURL = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(name)}`;
+        spotDiv.innerHTML = `
+          <h6>${name}</h6>
+          <p><a href="${googleSearchURL}" target="_blank">View images on Google</a></p>
+          <p>${name} is a famous tourist spot in ${place} known for its historical and cultural significance.</p>`;
+        touristEl.appendChild(spotDiv);
+      });
+
+      showBookingOptions(place);
+    }
+
+    function showBookingOptions(place) {
+      const bookingSection = document.getElementById('bookingSection');
+      const bookingCards = document.getElementById('bookingCards');
+      bookingCards.innerHTML = '';
+
+      const links = [
+        {
+          name: `Hotels in ${place}`,
+          type: 'Hotel',
+          price: 'Varies by location and season',
+          url: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(place)}`
+        },
+        {
+          name: `Restaurants in ${place}`,
+          type: 'Restaurant',
+          price: 'Check menus online',
+          url: `https://www.google.com/search?q=restaurants+in+${encodeURIComponent(place)}`
+        }
+      ];
+
+      links.forEach(b => {
+        bookingCards.innerHTML += `
+          <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100 fade-in">
+              <div class="card-body">
+                <h5 class="card-title">${b.name}</h5>
+                <p class="card-text">Type: ${b.type}<br>Price: ${b.price}</p>
+                <a href="${b.url}" target="_blank" class="btn btn-primary w-100">Book Now</a>
+              </div>
+            </div>
+          </div>`;
+      });
+
+      bookingSection.classList.add('show');
+    }
+
+    function showFeedbackForm() {
+      document.getElementById('destinations').classList.add('d-none');
+      document.getElementById('searchResults').classList.add('d-none');
+      document.getElementById('bookingSection').classList.add('d-none');
+      document.getElementById('historySection').classList.add('d-none');
+      document.getElementById('feedbackSection').classList.remove('d-none');
+    }
+
+    function showHistory() {
+      document.getElementById('destinations').classList.add('d-none');
+      document.getElementById('searchResults').classList.add('d-none');
+      document.getElementById('bookingSection').classList.add('d-none');
+      document.getElementById('feedbackSection').classList.add('d-none');
+      document.getElementById('historySection').classList.remove('d-none');
+      
+      // For now, show a placeholder - you can implement actual history later
+      document.getElementById('historyList').innerHTML = `
+        <div class="col-12">
+          <div class="alert alert-info">
+            Search history feature will be implemented soon. Users will be able to see their previously searched destinations here.
+          </div>
+        </div>
+      `;
+    }
+
+    // Feedback form submission
+    document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      try {
+        const response = await fetch('/api/feedback/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+            rating: 5, // Default rating
+            category: 'general'
+          }),
+          credentials: 'include'
+        });
+
+        if (response.ok) {
+          alert('Thank you for your feedback!');
+          document.getElementById('feedbackForm').reset();
+        } else {
+          alert('Failed to submit feedback. Please try again.');
+        }
+      } catch (error) {
+        console.error('Feedback submission error:', error);
+        alert('Network error. Please try again.');
+      }
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserStatus();
+      renderDestinations(destinations);
+    });
+  </script>
+</body>
+</html>

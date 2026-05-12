@@ -1,0 +1,87 @@
+.travel-header {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    color: rgb(244, 208, 7);
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+.header-content {
+    text-align: center;
+    width: 100%;
+}
+
+.header-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.header-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.header-search-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header-search-form {
+    width: 100%;
+}
+
+.header-search-input {
+    height: 50px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px 0 0 8px;
+}
+
+.header-search-btn {
+    height: 50px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    font-size: 1.1rem;
+    padding: 0 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .travel-header {
+        min-height: 300px;
+    }
+    
+    .header-title {
+        font-size: 2rem;
+    }
+    
+    .header-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .header-search-input {
+        font-size: 1rem;
+    }
+    
+    .header-search-btn {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+}
