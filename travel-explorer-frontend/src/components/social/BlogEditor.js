@@ -47,8 +47,8 @@ const BlogEditor = ({ onSave, onCancel, editBlog = null }) => {
             };
 
             const url = editBlog 
-                ? `http://localhost:5000/api/blogs/${editBlog._id}`
-                : 'http://localhost:5000/api/blogs';
+                ? `https://travelexplore.onrender.com/api/blogs/${editBlog._id}`
+                : 'https://travelexplore.onrender.com/api/blogs';
             
             const method = editBlog ? 'PUT' : 'POST';
 

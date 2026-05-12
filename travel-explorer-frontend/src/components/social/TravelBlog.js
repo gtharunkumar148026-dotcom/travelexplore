@@ -21,7 +21,7 @@ const TravelBlog = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`http://localhost:5000/api/blogs?page=${currentPage}&limit=6`);
+            const response = await fetch(`https://travelexplore.onrender.com/api/blogs?page=${currentPage}&limit=6`);
             if (response.ok) {
                 const data = await response.json();
                 setBlogs(data.blogs);
@@ -59,7 +59,7 @@ const TravelBlog = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/blogs/${blogId}/like`, {
+            const response = await fetch(`https://travelexplore.onrender.com/api/blogs/${blogId}/like`, {
                 method: 'POST',
                 credentials: 'include'
             });

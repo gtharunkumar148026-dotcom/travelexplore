@@ -19,7 +19,7 @@ const BlogCard = ({ blog, onUpdate, onDelete, onLike, currentUserId }) => {
     const handleDelete = async () => {
         if (window.confirm('Are you sure you want to delete this blog?')) {
             try {
-                const response = await fetch(`http://localhost:5000/api/blogs/${blog._id}`, {
+                const response = await fetch(`https://travelexplore.onrender.com/api/blogs/${blog._id}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });

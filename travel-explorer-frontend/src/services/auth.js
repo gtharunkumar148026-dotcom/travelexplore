@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://travelexplore.onrender.com/api';
 
 export const authService = {
     // ... existing login, logout, register functions ...

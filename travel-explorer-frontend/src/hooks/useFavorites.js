@@ -22,7 +22,7 @@ export const useFavorites = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:5000/api/favorites', {
+            const response = await fetch('https://travelexplore.onrender.com/api/favorites', {
                 credentials: 'include'
             });
             
@@ -48,7 +48,7 @@ export const useFavorites = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:5000/api/favorites', {
+            const response = await fetch('https://travelexplore.onrender.com/api/favorites', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const useFavorites = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`http://localhost:5000/api/favorites/${favoriteId}`, {
+            const response = await fetch(`https://travelexplore.onrender.com/api/favorites/${favoriteId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });

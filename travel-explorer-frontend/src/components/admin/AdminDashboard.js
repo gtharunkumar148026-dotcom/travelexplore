@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
     const loadDashboardStats = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/admin/users/stats', {
+            const response = await fetch('https://travelexplore.onrender.com/api/admin/users/stats', {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
     const loadUsers = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/users/users?page=${currentUserPage}&limit=10`, {
+            const response = await fetch(`https://travelexplore.onrender.com/api/admin/users/users?page=${currentUserPage}&limit=10`, {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
     const loadFeedback = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/users/feedback?page=${currentFeedbackPage}&limit=10`, {
+            const response = await fetch(`https://travelexplore.onrender.com/api/admin/users/feedback?page=${currentFeedbackPage}&limit=10`, {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
 
     const updateUserRole = async (userId, newRole) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/users/users/${userId}`, {
+            const response = await fetch(`https://travelexplore.onrender.com/api/admin/users/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
 
     const updateFeedbackStatus = async (feedbackId, newStatus, responseText = '') => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/users/feedback/${feedbackId}`, {
+            const response = await fetch(`https://travelexplore.onrender.com/api/admin/users/feedback/${feedbackId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
