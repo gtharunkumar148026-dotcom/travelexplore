@@ -118,14 +118,14 @@
     function logout() {
       fetch('/logout', { method: 'POST' })
         .then(() => {
-          window.location.href = '/login.html';
+          window.location.href = '/login';
         });
     }
   </script>
   <script>
   document.getElementById("logoutBtn").addEventListener("click", async () => {
     await fetch("/logout", { method: "POST" });
-    window.location.href = "/login.html";
+    window.location.href = "/login";
   });
 </script>
 

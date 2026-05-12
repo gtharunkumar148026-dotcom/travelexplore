@@ -4,7 +4,7 @@ import './WelcomePage.css';
 const WelcomePage = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
-            window.location.href = '/login.html';
+            window.location.href = '/login';
         }, 5000);
 
         return () => clearTimeout(timer);
