@@ -19,14 +19,6 @@ A full-stack travel information platform that helps users discover destinations 
 - MongoDB
 - Bootstrap
 - JavaScript
-
-## Installation
-
-```bash
-git clone <repo-url>
-npm install
-npm start
-
 ## Screenshots
 
 ### Home Page
@@ -43,3 +35,12 @@ Future Improvements
 AI-based recommendations
 Weather integration
 Hotel suggestions
+
+## Installation
+
+```bash
+git clone <repo-url>
+npm install
+npm start
+
+
